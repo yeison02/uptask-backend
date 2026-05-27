@@ -16,6 +16,14 @@ export class ProjectController {
     } 
 
     static async getAllProject(req: Request, res: Response) {
-        res.send('Obtener todos los proyectos');
+        try {
+            const projects = await Project.find({
+                
+            })
+            res.json(projects);
+        } catch (error) {
+            console.log(error);
+            console.log(colors.red.bold('Error al obtener los proyectos'))
+        }
     } 
 }  
