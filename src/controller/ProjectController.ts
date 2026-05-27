@@ -26,4 +26,20 @@ export class ProjectController {
             console.log(colors.red.bold('Error al obtener los proyectos'))
         }
     } 
+
+      static async getProjectById(req: Request, res: Response) {
+        const { id } = req.params;
+        try {
+            const project = await Project.findById(id);
+            if(!project){
+                const error = new Error('Proyecto no encontrado');
+                return res.status(404).json({error: error.message})
+            }
+            res.json(project);
+        } catch (error) {
+            console.log(error);
+            console.log(colors.red.bold('Error al obtener el proyecto'))
+        }
+    } 
+  
 }  
