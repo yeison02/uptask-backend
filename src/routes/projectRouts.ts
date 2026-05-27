@@ -1,9 +1,23 @@
 import { Router } from "express";
+import { body } from "express-validator"
 import { ProjectController } from "../controller/ProjectController";
+import { handleImputErrors } from "../middleware/validation";
 
 const router = Router();
 
-router.post('/', ProjectController.createProject)
+//Crear los proyectos
+router.post('/', 
+    body('projectName')
+    .notEmpty().withMessage('El nombre del proyecto no puede ir vacio'),
+    body('clientName')
+    .notEmpty().withMessage('El nombre del cliente no puede ir vacio'),
+    body('description')
+    .notEmpty().withMessage('La descripcion no puede ir vacia'),
+    handleImputErrors,
+    ProjectController.createProject
+)
+
+//Obtener todos los proyectos
 router.get('/', ProjectController.getAllProject)
 
 export default router;
